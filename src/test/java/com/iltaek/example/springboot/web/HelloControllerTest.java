@@ -1,8 +1,10 @@
 package com.iltaek.example.springboot.web;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,5 +27,21 @@ public class HelloControllerTest {
         mvc.perform(get("/hello"))
             .andExpect(status().isOk())
             .andExpect(content().string("hello"));
+    }
+
+    @Test
+    public void helloDto가_리턴된다Test() throws Exception {
+        //given
+        String name = "hello";
+        int amount = 1000;
+
+        //when
+        //then
+        mvc.perform(get("/hello/dto")
+            .param("name", name)
+            .param("amount", String.valueOf(amount))
+        ).andExpect(status().isOk())
+            .andExpect(jsonPath("$.name", is(name)))
+            .andExpect(jsonPath("$.amount", is(amount)));
     }
 }
