@@ -2,11 +2,13 @@ package com.iltaek.example.springboot.web.dto;
 
 import com.iltaek.example.springboot.domain.posts.Posts;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by iltaek on 2019/12/08 Blog : http://blog.iltaek.me Github : http://github.com/iltaek
  */
 @Getter
+@NoArgsConstructor
 public class PostsResponseDto {
 
     private Long id;

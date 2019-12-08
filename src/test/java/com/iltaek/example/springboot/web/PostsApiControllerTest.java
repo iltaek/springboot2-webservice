@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.iltaek.example.springboot.domain.posts.Posts;
 import com.iltaek.example.springboot.domain.posts.PostsRepository;
+import com.iltaek.example.springboot.web.dto.PostsResponseDto;
 import com.iltaek.example.springboot.web.dto.PostsSaveRequestDto;
 import com.iltaek.example.springboot.web.dto.PostsUpdateRequestDto;
 import java.util.List;
@@ -100,6 +101,31 @@ public class PostsApiControllerTest {
         List<Posts> allPosts = postsRepository.findAll();
         assertThat(allPosts.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(allPosts.get(0).getContent()).isEqualTo(expectedContent);
+
+    }
+
+    @Test
+    public void Posts_조회_Test() throws Exception {
+        //given
+        Posts savedPosts = postsRepository.save(Posts.builder()
+            .title("title")
+            .content("content")
+            .author("author")
+            .build());
+
+        Long savedId = savedPosts.getId();
+
+        String url = "http://localhost:" + port + "/api/v1/posts/" + savedId;
+
+        //when
+        ResponseEntity<PostsResponseDto> responseEntity = restTemplate.getForEntity(url, PostsResponseDto.class);
+
+        //then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        PostsResponseDto responseDto = responseEntity.getBody();
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getTitle()).isEqualTo(savedPosts.getTitle());
+        assertThat(responseDto.getContent()).isEqualTo(savedPosts.getContent());
 
     }
 }
