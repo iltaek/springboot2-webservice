@@ -2,13 +2,12 @@ package com.iltaek.example.springboot.web;
 
 import com.iltaek.example.springboot.config.auth.LoginUser;
 import com.iltaek.example.springboot.config.auth.dto.SessionUser;
-import com.iltaek.example.springboot.domain.user.User;
+import com.iltaek.example.springboot.service.posts.PostsService;
 import com.iltaek.example.springboot.web.dto.PostsResponseDto;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ui.Model;
-import com.iltaek.example.springboot.service.posts.PostsService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
